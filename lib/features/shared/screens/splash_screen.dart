@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:switch_test_task/features/main/presentation/pages/custom_bottom_nav_mainpage.dart';
 import '../../../core/cache/user_cache.dart';
 import '../../../core/theme/bloc/theme_cubit.dart';
 import '../../../core/theme/bloc/theme_state.dart';
@@ -43,10 +44,10 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
     final authCubit = context.read<AuthCubit>();
     await authCubit.loadCachedUser();
     if (authCubit.state is AuthSuccess) {
-      /*Navigator.pushReplacement(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const HomePage()),
-      );*/
+        MaterialPageRoute(builder: (_) => const CustomBottomNavMainPage()),
+      );
     } else {
       Navigator.pushReplacement(
         context,

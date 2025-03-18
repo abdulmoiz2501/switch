@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../main/presentation/pages/custom_bottom_nav_mainpage.dart';
 import '../../../shared/utils/string_extensions.dart';
 import '../../../shared/widgets/custom_button.dart';
 import '../../../shared/widgets/custom_text_field.dart';
@@ -43,7 +44,7 @@ class _SignInPageState extends State<SignInPage> {
           // );
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (_) =>  Container(child: Center(child: Text("HOME", style: TextStyle(fontSize: 20.sp),),),)),
+            MaterialPageRoute(builder: (_) => const CustomBottomNavMainPage()),
           );
         }
       },

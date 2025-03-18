@@ -15,6 +15,7 @@ import 'features/auth/domain/usecase/sign_in_usecase.dart';
 import 'features/auth/domain/usecase/sign_up_usecase.dart';
 import 'features/auth/domain/usecase/update_fcm_token_usecase.dart';
 import 'features/auth/presentation/cubit/auth_cubit.dart';
+import 'features/main/presentation/cubit/main_cubit.dart';
 import 'features/shared/screens/splash_screen.dart';
 import 'firebase_options.dart';
 
@@ -63,6 +64,9 @@ class MyApp extends StatelessWidget {
                 updateFcmTokenUseCase: updateFcmTokenUseCase,
               ),
             ),
+            BlocProvider(
+              create: (_) => MainCubit(),
+            ),
           ],
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {
@@ -90,6 +94,12 @@ class MyApp extends StatelessWidget {
                   ),
                   progressIndicatorTheme: ProgressIndicatorThemeData(
                     color: AppColors.primaryColor(state.isDarkMode),
+                  ),
+                  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                    backgroundColor:
+                    AppColors.scaffoldBackgroundColor(state.isDarkMode),
+                    selectedItemColor: AppColors.primaryColor(state.isDarkMode),
+                    unselectedItemColor: AppColors.textColor(state.isDarkMode),
                   ),
                 ),
                 home: const SplashScreen(),
