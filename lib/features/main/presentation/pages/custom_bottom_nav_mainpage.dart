@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:switch_test_task/core/utils/app_assets.dart';
 import '../../../../core/theme/bloc/theme_cubit.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../../product/presentation/pages/home_page.dart';
 import '../cubit/main_cubit.dart';
 import '../cubit/main_state.dart';
 
@@ -63,7 +64,7 @@ class CustomBottomNavMainPage extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+/*class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -72,7 +73,7 @@ class HomePage extends StatelessWidget {
       child: Text("Home Page"),
     );
   }
-}
+}*/
 
 class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
