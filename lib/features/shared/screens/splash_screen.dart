@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/theme/bloc/theme_cubit.dart';
+import '../../../core/theme/bloc/theme_state.dart';
 import '../../../core/utils/app_assets.dart';
 import '../../../core/utils/app_colors.dart';
 
@@ -26,29 +29,38 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(AppAssets.splashLogo,
+            Image.asset(
+              AppAssets.appLogo,
               width: 200.w,
               height: 200.h,
             ),
             SizedBox(height: 20.h),
             Text(
-              'Welcome to Our Shop!',
+              'Welcome!',
               style: TextStyle(
-                color: AppColors.splashTextColor,
                 fontSize: 24.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 20.h),
-            CircularProgressIndicator(
-              color: AppColors.white,
-            ),
+            /*Center(
+              child: BlocBuilder<ThemeCubit, ThemeState>(
+                builder: (context, state) {
+                  return SwitchListTile(
+                    title: Text("Dark Mode"),
+                    value: state.isDarkMode,
+                    onChanged: (value) {
+                      context.read<ThemeCubit>().toggleTheme();
+                    },
+                  );
+                },
+              ),
+            ),*/
           ],
         ),
       ),
