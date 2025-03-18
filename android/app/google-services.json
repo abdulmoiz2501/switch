@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "778884543956",
+    "project_id": "switch-4215d",
+    "storage_bucket": "switch-4215d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778884543956:android:687b226a16924624e09241",
+        "android_client_info": {
+          "package_name": "com.example.switch_test_task"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbQFkQ9z9DqLPAYtSO1f7lTG-jsd4UZpk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,26 +4,49 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/theme/bloc/theme_cubit.dart';
 import '../../../core/theme/bloc/theme_state.dart';
 import '../../../core/utils/app_assets.dart';
-import '../../../core/utils/app_colors.dart';
+import '../../auth/presentation/pages/sign_in_page.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  SplashScreenState createState() => SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _fadeAnimation;
+  late final Animation<double> _scaleAnimation;
+
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
+    );
+    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
+    );
+    _controller.forward();
     _navigateToNextScreen();
   }
 
-  void _navigateToNextScreen() async {
- /*   await Future.delayed(Duration(seconds: 4));
+  Future<void> _navigateToNextScreen() async {
+    await Future.delayed(const Duration(seconds: 4));
     Navigator.pushReplacement(
       context,
-      //MaterialPageRoute(builder: (_) => LoginScreen()),
-    );*/
+      MaterialPageRoute(builder: (_) => const SignInPage()),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -32,35 +55,30 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              AppAssets.appLogo,
-              width: 200.w,
-              height: 200.h,
-            ),
-            SizedBox(height: 20.h),
-            Text(
-              'Welcome!',
-              style: TextStyle(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.bold,
+            FadeTransition(
+              opacity: _fadeAnimation,
+              child: ScaleTransition(
+                scale: _scaleAnimation,
+                child: Image.asset(
+                  AppAssets.appLogo,
+                  width: 200.w,
+                  height: 200.h,
+                ),
               ),
             ),
             SizedBox(height: 20.h),
-            /*Center(
-              child: BlocBuilder<ThemeCubit, ThemeState>(
-                builder: (context, state) {
-                  return SwitchListTile(
-                    title: Text("Dark Mode"),
-                    value: state.isDarkMode,
-                    onChanged: (value) {
-                      context.read<ThemeCubit>().toggleTheme();
-                    },
-                  );
-                },
+            FadeTransition(
+              opacity: _fadeAnimation,
+              child: Text(
+                'Welcome!',
+                style: TextStyle(
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),*/
+            ),
+            SizedBox(height: 20.h),
           ],
         ),
       ),
