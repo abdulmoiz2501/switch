@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/cache/user_cache.dart';
 import '../../../core/theme/bloc/theme_cubit.dart';
 import '../../../core/theme/bloc/theme_state.dart';
 import '../../../core/utils/app_assets.dart';
+import '../../auth/presentation/cubit/auth_cubit.dart';
+import '../../auth/presentation/cubit/auth_state.dart';
 import '../../auth/presentation/pages/sign_in_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,10 +40,19 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
 
   Future<void> _navigateToNextScreen() async {
     await Future.delayed(const Duration(seconds: 4));
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const SignInPage()),
-    );
+    final authCubit = context.read<AuthCubit>();
+    await authCubit.loadCachedUser();
+    if (authCubit.state is AuthSuccess) {
+      /*Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const HomePage()),
+      );*/
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const SignInPage()),
+      );
+    }
   }
 
   @override

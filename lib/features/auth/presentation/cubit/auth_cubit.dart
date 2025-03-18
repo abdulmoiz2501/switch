@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/cache/user_cache.dart';
 import '../../domain/usecase/sign_in_usecase.dart';
 import '../../domain/usecase/sign_up_usecase.dart';
 import '../../domain/usecase/update_fcm_token_usecase.dart';
@@ -30,6 +31,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AuthLoading());
     try {
       final user = await signInUseCase(email, password);
+      final cache = UserCache();
+      await cache.cacheUser(user);
       emit(AuthSuccess(user));
     } catch (e) {
       emit(AuthError(e.toString()));
@@ -43,4 +46,17 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthError(e.toString()));
     }
   }
+
+
+  Future<void> loadCachedUser() async {
+    final cache = UserCache();
+    final cachedUser = await cache.getCachedUser();
+    if (cachedUser != null) {
+      print("Cached user found: ${cachedUser.uid}");
+      emit(AuthSuccess(cachedUser));
+    } else {
+      print("No cached user found");
+    }
+  }
+
 }
