@@ -4,5 +4,6 @@ class AppAssets {
   static const String cartIcon = 'assets/icons/cartIcon.png';
   static const String bannerImage = 'assets/icons/bannerImage.png';
   static const String ratingIcon = 'assets/icons/ratingIcon.png';
+  static const String binIcon = 'assets/icons/bin.png';
 
 }

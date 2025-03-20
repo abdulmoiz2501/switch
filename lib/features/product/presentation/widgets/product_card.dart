@@ -1,34 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../../cart/presentation/cubit/cart_cubit.dart';
+import '../../data/models/product_model.dart';
 
-class ProductCard extends StatefulWidget {
+class ProductCard extends StatelessWidget {
   final bool isDarkMode;
-  final String imageUrl;
-  final String title;
-  final double price;
-  final double rating;
+  final ProductModel product;
 
   const ProductCard({
     Key? key,
     required this.isDarkMode,
-    required this.imageUrl,
-    required this.title,
-    required this.price,
-    required this.rating,
+    required this.product,
   }) : super(key: key);
 
   @override
-  State<ProductCard> createState() => _ProductCardState();
-}
-
-class _ProductCardState extends State<ProductCard> {
-  bool _addedToCart = false;
-
-  @override
   Widget build(BuildContext context) {
-    final backgroundColor = AppColors.productCardBg(widget.isDarkMode);
+    final backgroundColor = AppColors.productCardBg(isDarkMode);
+    final cartCubit = context.watch<CartCubit>();
+    final isInCart = cartCubit.isProductInCart(product);
 
     return Container(
       width: 160.w,
@@ -45,10 +37,10 @@ class _ProductCardState extends State<ProductCard> {
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
                 child: Image.network(
-                  widget.imageUrl,
+                  product.imageUrl,
                   width: double.infinity,
                   height: 120.h,
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.cover,
                 ),
               ),
               Positioned(
@@ -56,17 +48,16 @@ class _ProductCardState extends State<ProductCard> {
                 top: 8,
                 child: GestureDetector(
                   onTap: () {
-                    setState(() {
-                      _addedToCart = !_addedToCart;
-                    });
+                    //context.read<CartCubit>().toggleCartItem(product);
+                    context.read<CartCubit>().addOrUpdateProduct(product);
                   },
                   child: Image.asset(
                     AppAssets.cartIcon,
-                    width: 35.w,
-                    height: 35.h,
-                    color: _addedToCart
-                        ? AppColors.primaryColor(widget.isDarkMode)
-                        : (widget.isDarkMode ? Colors.white : Colors.grey),
+                    width: 40.w,
+                    height: 40.h,
+                    color: isInCart
+                        ? AppColors.primaryColor(isDarkMode)
+                        : (isDarkMode ? Colors.white : Colors.grey),
                   ),
                 ),
               ),
@@ -79,9 +70,9 @@ class _ProductCardState extends State<ProductCard> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.title,
+                    product.title,
                     style: TextStyle(
-                      color: AppColors.textColor(widget.isDarkMode),
+                      color: AppColors.textColor(isDarkMode),
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                     ),
@@ -97,9 +88,9 @@ class _ProductCardState extends State<ProductCard> {
                     ),
                     SizedBox(width: 2.w),
                     Text(
-                      widget.rating.toStringAsFixed(1),
+                      product.rating.toStringAsFixed(1),
                       style: TextStyle(
-                        color: AppColors.ratingColor(widget.isDarkMode),
+                        color: AppColors.ratingColor(isDarkMode),
                         fontSize: 12.sp,
                       ),
                     ),
@@ -111,9 +102,9 @@ class _ProductCardState extends State<ProductCard> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Text(
-              "\$${widget.price.toStringAsFixed(2)}",
+              "\$${product.price.toStringAsFixed(2)}",
               style: TextStyle(
-                color: AppColors.textColor(widget.isDarkMode),
+                color: AppColors.textColor(isDarkMode),
                 fontSize: 14.sp,
                 fontWeight: FontWeight.bold,
               ),

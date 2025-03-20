@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "Gaming Headset: Blue VO!CE Detachable Boom Mic",
+    "imageUrl": "https://m.media-amazon.com/images/I/71IL4SsThNL.__AC_SX300_SY300_QL70_FMwebp_.jpg",
+    "price": 84.99,
+    "rating": 4.8
+  },
+  {
+    "id": 2,
+    "title": "Samsung S24 FE",
+    "imageUrl": "https://m.media-amazon.com/images/I/61uakkLoHxL._AC_UY218_.jpg",
+    "price": 614.00,
+    "rating": 4.5
+  },
+  {
+    "id": 3,
+    "title": "Google Pixel 9",
+    "imageUrl": "https://m.media-amazon.com/images/I/61fh21u3DJL._AC_UY218_.jpg",
+    "price": 645.00,
+    "rating": 4.2
+  },
+  {
+    "id": 4,
+    "title": "18 Piece Dinnerware Set",
+    "imageUrl": "https://m.media-amazon.com/images/I/61QUTfInRxL._AC_UL320_.jpg",
+    "price": 39.99,
+    "rating": 4.0
+  }
+]

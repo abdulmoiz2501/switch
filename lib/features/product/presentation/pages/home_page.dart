@@ -7,49 +7,24 @@ import '../../../../core/utils/app_colors.dart';
 import '../../../auth/data/models/user_model.dart';
 import '../../../auth/presentation/cubit/auth_cubit.dart';
 import '../../../auth/presentation/cubit/auth_state.dart';
+import '../cubit/product_cubit.dart';
+import '../cubit/product_state.dart';
 import '../widgets/product_card.dart';
 import '../widgets/search_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  // Mock data for grid items
-  final List<Map<String, dynamic>> mockProducts = const [
-    {
-      "title": "Gaming Headset: Blue VO!CE Detachable Boom Mic",
-      "imageUrl": "https://m.media-amazon.com/images/I/71IL4SsThNL.__AC_SX300_SY300_QL70_FMwebp_.jpg",
-      "price": 84.99,
-      "rating": 4.8,
-    },
-    {
-      "title": "Samsung S24 FE",
-      "imageUrl": "https://m.media-amazon.com/images/I/61uakkLoHxL._AC_UY218_.jpg",
-      "price": 614.00,
-      "rating": 4.5,
-    },
-    {
-      "title": "Google Pixel 9",
-      "imageUrl": "https://m.media-amazon.com/images/I/61fh21u3DJL._AC_UY218_.jpg",
-      "price": 645.00,
-      "rating": 4.2,
-    },
-    {
-      "title": "18 Piece Dinnerware set",
-      "imageUrl": "https://m.media-amazon.com/images/I/61QUTfInRxL._AC_UL320_.jpg",
-      "price": 39.99,
-      "rating": 4.0,
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     final isDarkMode = context.watch<ThemeCubit>().state.isDarkMode;
-
     final authState = context.watch<AuthCubit>().state;
     UserModel? user;
     if (authState is AuthSuccess) {
       user = authState.user;
     }
+
+    context.read<ProductCubit>().fetchProducts();
 
     return Scaffold(
       appBar: AppBar(
@@ -73,10 +48,10 @@ class HomePage extends StatelessWidget {
             CustomSearchBar(
               isDarkMode: isDarkMode,
               onTap: () {
-
               },
             ),
             SizedBox(height: 20.h),
+
             Text(
               "Categories",
               style: TextStyle(
@@ -98,7 +73,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.h),
-
             ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
               child: Image.asset(
@@ -109,38 +83,48 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Best sellers",
-                  style: TextStyle(
-                    color: AppColors.textColor(isDarkMode),
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            Text(
+              "Best sellers",
+              style: TextStyle(
+                color: AppColors.textColor(isDarkMode),
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 10.h),
-
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: mockProducts.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisExtent: 220.h,
-              ),
-              itemBuilder: (context, index) {
-                final product = mockProducts[index];
-                return ProductCard(
-                  isDarkMode: isDarkMode,
-                  imageUrl: product["imageUrl"],
-                  title: product["title"],
-                  price: product["price"],
-                  rating: product["rating"],
-                );
+            BlocBuilder<ProductCubit, ProductState>(
+              builder: (context, state) {
+                if (state is ProductLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ProductLoaded) {
+                  final products = state.products;
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: products.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisExtent: 220.h,
+                    ),
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      return ProductCard(
+                        isDarkMode: isDarkMode,
+                        product: product,
+                      );
+                    },
+                  );
+                } else if (state is ProductError) {
+                  return Center(
+                    child: Text(
+                      "Error: ${state.message}",
+                      style: TextStyle(
+                        color: AppColors.textColor(isDarkMode),
+                      ),
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
               },
             ),
           ],
