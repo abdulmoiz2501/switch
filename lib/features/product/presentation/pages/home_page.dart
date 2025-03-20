@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:switch_test_task/features/product/presentation/pages/product_detail_page.dart';
 import '../../../../core/theme/bloc/theme_cubit.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
@@ -108,9 +109,31 @@ class HomePage extends StatelessWidget {
                     ),
                     itemBuilder: (context, index) {
                       final product = products[index];
-                      return ProductCard(
-                        isDarkMode: isDarkMode,
-                        product: product,
+                      return GestureDetector(
+                        onTap: () {
+                          print("The product clicked on is: $product");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => ProductDetailPage(
+                                isDarkMode: isDarkMode,
+                                product: product,
+                              ),
+                            ),
+                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => ProductDetailPage(
+                          //       product: product,
+                          //     ),
+                          //   ),
+                          // );
+                        },
+                        child: ProductCard(
+                          isDarkMode: isDarkMode,
+                          product: product,
+                        ),
                       );
                     },
                   );

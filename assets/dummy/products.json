@@ -4,27 +4,40 @@
     "title": "Gaming Headset: Blue VO!CE Detachable Boom Mic",
     "imageUrl": "https://m.media-amazon.com/images/I/71IL4SsThNL.__AC_SX300_SY300_QL70_FMwebp_.jpg",
     "price": 84.99,
-    "rating": 4.8
+    "rating": 4.8,
+    "description": "The Blue VO!CE microphone technology delivers real-time voice filters that reduce noise and make your voice sound richer, cleaner, and more professional. Get the Blue VO!CE broadcast vocal effects, including streamer and podcaster presets, and DTS Headphone:X 2.0 surround sound.",
+    "soldCount": 100,
+    "totalRatings": 1000
   },
   {
     "id": 2,
     "title": "Samsung S24 FE",
     "imageUrl": "https://m.media-amazon.com/images/I/61uakkLoHxL._AC_UY218_.jpg",
     "price": 614.00,
-    "rating": 4.5
+    "rating": 4.5,
+    "description": "The Samsung Galaxy S24 FE 5G is a smartphone that comes with a 6.7-inch Super AMOLED display with a resolution of 1080x2400 pixels. It is powered by an octa-core Qualcomm Snapdragon 778G processor and comes with 6GB of RAM. The Samsung Galaxy S24 FE 5G runs Android 12 and is powered by a 4500mAh battery. The Samsung Galaxy S24 FE 5G supports wireless charging, as well as proprietary fast charging.",
+    "soldCount": 200,
+    "totalRatings": 2000,
+
   },
   {
     "id": 3,
     "title": "Google Pixel 9",
     "imageUrl": "https://m.media-amazon.com/images/I/61fh21u3DJL._AC_UY218_.jpg",
     "price": 645.00,
-    "rating": 4.2
+    "rating": 4.2,
+    "description": "The Google Pixel 9 is a smartphone that comes with a 6.7-inch OLED display with a resolution of 1080x2400 pixels. It is powered by an octa-core Qualcomm Snapdragon 778G processor and comes with 6GB of RAM. The Google Pixel 9 runs Android 12 and is powered by a 4500mAh battery. The Google Pixel 9 supports wireless charging, as well as proprietary fast charging.",
+    "soldCount": 300,
+    "totalRatings": 3000
   },
   {
     "id": 4,
     "title": "18 Piece Dinnerware Set",
     "imageUrl": "https://m.media-amazon.com/images/I/61QUTfInRxL._AC_UL320_.jpg",
     "price": 39.99,
-    "rating": 4.0
+    "rating": 4.0,
+    "description": "The Amazon Basics 18-Piece Dinnerware Set is a great addition to any kitchen. This set includes 6 dinner plates, 6 salad plates, and 6 bowls. The plates and bowls are made of durable porcelain that is microwave, oven, and dishwasher safe. The set is available in a variety of colors to match any kitchen decor.",
+    "soldCount": 400,
+    "totalRatings": 4000
   }
 ]
