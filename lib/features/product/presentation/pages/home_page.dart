@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:switch_test_task/features/product/presentation/pages/product_detail_page.dart';
 import '../../../../core/theme/bloc/theme_cubit.dart';
+import '../../../../core/theme/bloc/theme_state.dart';
 import '../../../../core/utils/app_assets.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../auth/data/models/user_model.dart';
@@ -31,13 +32,19 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Text(
-          "Hello, ${user?.email ?? 'Guest'}",
-          style: TextStyle(
-            color: AppColors.textColor(isDarkMode),
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w600,
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Hello, ${user?.email ?? 'Guest'}",
+              style: TextStyle(
+                color: AppColors.textColor(isDarkMode),
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+
+          ],
         ),
         centerTitle: false,
       ),
@@ -46,13 +53,19 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomSearchBar(
-              isDarkMode: isDarkMode,
-              onTap: () {
+            CustomSearchBar(isDarkMode: isDarkMode, onTap: () {}),
+            SizedBox(height: 20.h),
+            BlocBuilder<ThemeCubit, ThemeState>(
+              builder: (context, state) {
+                return SwitchListTile(
+                  title: Text("Dark Mode", style: TextStyle(color: AppColors.textColor(isDarkMode)),),
+                  value: state.isDarkMode,
+                  onChanged: (value) {
+                    context.read<ThemeCubit>().toggleTheme();
+                  },
+                );
               },
             ),
-            SizedBox(height: 20.h),
-
             Text(
               "Categories",
               style: TextStyle(
@@ -115,10 +128,11 @@ class HomePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => ProductDetailPage(
-                                isDarkMode: isDarkMode,
-                                product: product,
-                              ),
+                              builder:
+                                  (_) => ProductDetailPage(
+                                    isDarkMode: isDarkMode,
+                                    product: product,
+                                  ),
                             ),
                           );
                           // Navigator.push(
@@ -141,9 +155,7 @@ class HomePage extends StatelessWidget {
                   return Center(
                     child: Text(
                       "Error: ${state.message}",
-                      style: TextStyle(
-                        color: AppColors.textColor(isDarkMode),
-                      ),
+                      style: TextStyle(color: AppColors.textColor(isDarkMode)),
                     ),
                   );
                 }

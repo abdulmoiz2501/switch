@@ -25,9 +25,13 @@ import 'features/cart/domain/usecase/remove_from_cart_usecase.dart';
 import 'features/cart/presentation/cubit/cart_cubit.dart';
 import 'features/main/presentation/cubit/main_cubit.dart';
 import 'features/product/data/repository/product_repository_impl.dart';
+import 'features/product/data/repository/review_repository_impl.dart';
 import 'features/product/data/source/product_data_source.dart';
+import 'features/product/data/source/review_data_source.dart';
+import 'features/product/domain/usecase/add_review_usecase.dart';
 import 'features/product/domain/usecase/fetch_products_usecase.dart';
 import 'features/product/presentation/cubit/product_cubit.dart';
+import 'features/product/presentation/cubit/review_cubit.dart';
 import 'features/shared/screens/splash_screen.dart';
 import 'firebase_options.dart';
 import 'package:path_provider/path_provider.dart';
@@ -49,6 +53,10 @@ final cartRepository = CartRepositoryImpl(cartLocalDataSource);
 final addToCartUseCase = AddToCartUseCase(cartRepository);
 final removeFromCartUseCase = RemoveFromCartUseCase(cartRepository);
 final getCartItemsUseCase = GetCartItemsUseCase(cartRepository);
+final reviewRemoteDataSource = ReviewRemoteDataSourceImpl(FirebaseFirestore.instance);
+final reviewRepository = ReviewRepositoryImpl(reviewRemoteDataSource);
+final addReviewUseCase = AddReviewUseCase(reviewRepository);
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -104,6 +112,9 @@ class MyApp extends StatelessWidget {
                 removeFromCartUseCase: removeFromCartUseCase,
                 getCartItemsUseCase: getCartItemsUseCase,
               ),
+            ),
+            BlocProvider(
+              create: (_) => ReviewCubit(addReviewUseCase),
             ),
           ],
           child: BlocBuilder<ThemeCubit, ThemeState>(

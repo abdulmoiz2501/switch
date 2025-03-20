@@ -92,6 +92,7 @@ class SplashScreenState extends State<SplashScreen> with SingleTickerProviderSta
               ),
             ),
             SizedBox(height: 20.h),
+
           ],
         ),
       ),
