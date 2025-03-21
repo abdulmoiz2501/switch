@@ -46,13 +46,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             _userRating = 0.0;
             _reviewController.clear();
           });
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Review submitted!")),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text("Review submitted!")));
         } else if (state is ReviewError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
         }
       },
       child: Scaffold(
@@ -60,7 +60,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: AppColors.textColor(isDarkMode)),
+            icon: Icon(
+              Icons.arrow_back,
+              color: AppColors.textColor(isDarkMode),
+            ),
             onPressed: () => Navigator.pop(context),
           ),
           title: Text(
@@ -176,32 +179,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
               ),
               SizedBox(height: 10.h),
-              CustomButton(
-                text: "Submit Review",
-                onPressed: _submitReview,
-              ),
+              CustomButton(text: "Submit Review", onPressed: _submitReview),
               SizedBox(height: 20.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomButton(
-                    width: 0.4.sw,
-                    text: "Add to cart",
-                    color: AppColors.productCardBg(isDarkMode),
-                    onPressed: () {
-                      context.read<CartCubit>().addOrUpdateProduct(product);
-                    },
-                  ),
-                  SizedBox(width: 16.w),
-                  CustomButton(
-                    width: 0.4.sw,
-                    text: "Buy Now",
-                    onPressed: () {
 
-                    },
-                  ),
-                ],
+              CustomButton(
+                text: "Add to cart",
+                onPressed: () {
+                  context.read<CartCubit>().addOrUpdateProduct(product);
+                },
               ),
+              SizedBox(height: 40.h),
             ],
           ),
         ),

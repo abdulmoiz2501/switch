@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
+import 'core/services/notification_service.dart';
 import 'core/theme/bloc/theme_cubit.dart';
 import 'core/theme/bloc/theme_state.dart';
 import 'core/utils/app_colors.dart';
@@ -24,6 +25,10 @@ import 'features/cart/domain/usecase/get_cart_items_usecase.dart';
 import 'features/cart/domain/usecase/remove_from_cart_usecase.dart';
 import 'features/cart/presentation/cubit/cart_cubit.dart';
 import 'features/main/presentation/cubit/main_cubit.dart';
+import 'features/order/data/repository/order_repository_impl.dart';
+import 'features/order/data/source/order_data_source.dart';
+import 'features/order/domain/usecase/place_order_usecase.dart';
+import 'features/order/presentation/cubit/order_cubit.dart';
 import 'features/product/data/repository/product_repository_impl.dart';
 import 'features/product/data/repository/review_repository_impl.dart';
 import 'features/product/data/source/product_data_source.dart';
@@ -73,7 +78,8 @@ void main() async {
   String? token = await FirebaseMessaging.instance.getToken();
   print("FCM Token: $token");
 
-
+  final NotificationService notificationService = NotificationService();
+  await notificationService.initialize();
 
   runApp(MyApp());
 }
@@ -116,6 +122,17 @@ class MyApp extends StatelessWidget {
             BlocProvider(
               create: (_) => ReviewCubit(addReviewUseCase),
             ),
+            BlocProvider(
+              create: (_) => OrderCubit(
+                placeOrderUseCase: PlaceOrderUseCase(
+                  OrderRepositoryImpl(
+                    OrderRemoteDataSourceImpl(FirebaseFirestore.instance),
+                  ),
+                ),
+              ),
+            ),
+
+
           ],
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, state) {

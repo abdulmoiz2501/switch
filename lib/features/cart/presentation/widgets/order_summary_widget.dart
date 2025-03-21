@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_colors.dart';
+import '../../../order/presentation/pages/checkout_page.dart';
 import '../../../shared/widgets/custom_button.dart';
 
 class OrderSummary extends StatelessWidget {
@@ -46,7 +47,12 @@ class OrderSummary extends StatelessWidget {
           CustomButton(
             text: "Proceed to Checkout",
             onPressed: () {
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CheckoutPage(),
+                ),
+              );
             },
           ),
         ],

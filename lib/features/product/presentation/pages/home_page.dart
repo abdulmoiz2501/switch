@@ -53,7 +53,13 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomSearchBar(isDarkMode: isDarkMode, onTap: () {}),
+            CustomSearchBar(
+              isDarkMode: isDarkMode,
+              onChanged: (query) {
+                context.read<ProductCubit>().filterProducts(query);
+              },
+            ),
+
             SizedBox(height: 20.h),
             BlocBuilder<ThemeCubit, ThemeState>(
               builder: (context, state) {
